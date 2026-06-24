@@ -5,18 +5,32 @@
   "scripts": {
     "dev": "bun run --watch src/main.ts",
     "start": "bun run src/main.ts",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
     "test": "bun test tests/unit",
     "test:e2e": "bun test tests/e2e"
   },
   "dependencies": {
+    "@crash/events": "workspace:*",
     "@nestjs/common": "^11.1.17",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.1.17",
+    "@nestjs/passport": "^11.0.0",
     "@nestjs/platform-express": "^11.1.17",
+    "@prisma/client": "^6.0.0",
+    "amqplib": "^0.10.4",
+    "jwks-rsa": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/passport-jwt": "^4.0.1",
     "bun-types": "latest",
+    "prisma": "^6.0.0",
     "typescript": "^5.8.3"
   }
 }
