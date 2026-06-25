@@ -13,6 +13,7 @@ import { WalletEventsConsumer } from "./infrastructure/messaging/wallet-events.c
 import { WalletEventsPublisher } from "./infrastructure/messaging/wallet-events.publisher";
 import { PrismaWalletRepository } from "./infrastructure/persistence/prisma/prisma-wallet.repository";
 import { PrismaService } from "./infrastructure/persistence/prisma/prisma.service";
+import { WalletBootstrapService } from "./infrastructure/bootstrap/wallet-bootstrap.service";
 import { WalletsController } from "./presentation/controllers/wallets.controller";
 
 @Module({
@@ -36,6 +37,7 @@ import { WalletsController } from "./presentation/controllers/wallets.controller
       provide: WALLET_REPOSITORY,
       useClass: PrismaWalletRepository,
     },
+    WalletBootstrapService,
   ],
 })
 export class AppModule {}
