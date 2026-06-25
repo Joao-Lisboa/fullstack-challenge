@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-bg: #0a0e17;
+  --color-surface: #111827;
+  --color-surface-2: #1a2234;
+  --color-border: #2a3548;
+  --color-neon: #00ff88;
+  --color-neon-dim: #00cc6a;
+  --color-danger: #ff3366;
+  --color-warning: #ffaa00;
+  --color-muted: #8b9cb3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 255, 136, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255, 51, 102, 0.06), transparent),
+    var(--color-bg);
+  color: #e8edf5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(0, 255, 136, 0.8);
+  }
+}
+
+@keyframes crash-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.animate-crash-shake {
+  animation: crash-shake 0.4s ease-in-out;
+}
+
+@keyframes crash-flash {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-crash-flash {
+  animation: crash-flash 1.2s ease-out forwards;
+}
