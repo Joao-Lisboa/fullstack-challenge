@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoundStatus {
+  BETTING
+  RUNNING
+  CRASHED
+}
+
+enum BetStatus {
+  AWAITING_DEBIT
+  ACTIVE
+  CASHED_OUT
+  LOST
+}
+
+model Round {
+  id                   String      @id @default(uuid()) @db.Uuid
+  roundNumber          Int         @unique @map("round_number")
+  status               RoundStatus
+  serverSeed           String      @map("server_seed")
+  serverSeedHash       String      @map("server_seed_hash")
+  crashPointBps        Int         @map("crash_point_bps")
+  currentMultiplierBps Int         @map("current_multiplier_bps")
+  bettingEndsAt        DateTime?   @map("betting_ends_at")
+  startedAt            DateTime?   @map("started_at")
+  crashedAt            DateTime?   @map("crashed_at")
+  createdAt            DateTime    @default(now()) @map("created_at")
+  updatedAt            DateTime    @updatedAt @map("updated_at")
+  bets                 Bet[]
+
+  @@map("rounds")
+}
+
+model Bet {
+  id                   String    @id @default(uuid()) @db.Uuid
+  roundId              String    @map("round_id") @db.Uuid
+  round                Round     @relation(fields: [roundId], references: [id])
+  userId               String    @map("user_id")
+  username             String
+  amountCents          BigInt    @map("amount_cents")
+  status               BetStatus
+  cashoutMultiplierBps Int?      @map("cashout_multiplier_bps")
+  payoutCents          BigInt?   @map("payout_cents")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  @@unique([roundId, userId])
+  @@map("bets")
+}
+
+model GameState {
+  id                Int    @id @default(1)
+  currentRoundId    String? @map("current_round_id") @db.Uuid
+  nextRoundNumber   Int     @default(1) @map("next_round_number")
+  genesisSeed       String  @map("genesis_seed")
+  pendingServerSeed String  @map("pending_server_seed")
+
+  @@map("game_state")
+}
